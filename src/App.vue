@@ -1,5 +1,8 @@
+
+
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+  import HelloWorld from './components/HelloWorld.vue'
+  import Homework2 from './components/homework-2/Homework2.vue'
 </script>
 
 <template>
@@ -11,7 +14,9 @@ import HelloWorld from './components/HelloWorld.vue'
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
-  <HelloWorld msg="Орлов Сергей" />
+
+
+  <Homework2 />
 </template>
 
 <style scoped>
