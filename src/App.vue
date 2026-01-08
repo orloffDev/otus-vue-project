@@ -3,6 +3,7 @@
 <script setup>
   import HelloWorld from './components/HelloWorld.vue'
   import Homework2 from './components/homework-2/Homework2.vue'
+  import Homework3 from './components/homework-3/Homework3.vue'
 </script>
 
 <template>
@@ -15,7 +16,7 @@
     </a>
   </div>
 
-
+  <Homework3 />
   <Homework2 />
 </template>
 
