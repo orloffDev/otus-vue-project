@@ -15,7 +15,13 @@ reactive -  с объектами и массивами
 
 shalowref обект моем заменить, а сам объект не реактивен
 
-[Директивы](directives.md)
+![img_2.png](img_2.png)
+
+## [Директивы](directives.md)
+
+
+## [Компоненты](components.md)
+
 
 
 
