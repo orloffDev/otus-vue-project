@@ -2,11 +2,12 @@
 <script setup>
   import { ref, reactive, watch } from 'vue';
   import axios from 'axios';
+
   
-import Products from './components/prod/Products.vue';
-import FilterBlock from './components/prod/FilterBlock.vue';
-import NewProductBlock from './components/prod/NewProductBlock.vue';
-import OrderForm from './components/prod/OrderForm.vue';
+import Products from '../prod/Products.vue';
+import FilterBlock from '../prod/FilterBlock.vue';
+import NewProductBlock from '../prod/NewProductBlock.vue';
+import OrderForm from '../prod/OrderForm.vue';
 
 let allProductsData = ref([])
 let filteredProductsData = ref([])
