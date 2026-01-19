@@ -2,7 +2,6 @@
   import { ref } from 'vue';
   import { useRoute } from 'vue-router';
   import axios from 'axios';
-  import Product from '../prod/Product.vue';
 
   const route = useRoute()
   const productId = parseInt(route.params.productId)
@@ -16,7 +15,7 @@ const getProduct = async () => {
     const response = await axios.get(`https://fakestoreapi.com/products/${productId}`)
       item = response.data
   } catch (err) {
-    error.value = err.message || 'Не удалось загрузить товары'
+    error.value = err.message || 'Не удалось загрузить товар'
   } finally {
     loading.value = false
   }
@@ -32,17 +31,17 @@ getProduct()
     <div v-if="loading">Загрузка...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
-      <Product
-        :id="item.id"
-        :title="item.title"
-        :description="item.description"
-        :image="item.image"
-        :price="item.price"
-        :category="item.category"
-        :rating-rate="item.rating.rate"
-        :rating-count="item.rating.count"
-        class="product"
-    />
+        <h1>{{ item.title }}</h1>
+        <img :src="item.image" alt="" />
+        <p>{{ item.description }}</p>
+        <dl>
+          <dt>Цена</dt>
+          <dd>{{ item.price }}</dd>
+          <dt>Категория</dt>
+          <dd>{{ item.category }}</dd>
+          <dt>Рейтинг</dt>
+          <dd>{{ item.rating.rate }}/{{ item.rating.count }}</dd>
+        </dl>
     </div>
   </div>
 </template>
