@@ -8,13 +8,13 @@ import App from './App.vue'
 axios.defaults.headers.common['X-Request-Ajax'] = 1;
 
 // Импорт компонентов
-import Home from './components/pages/Home.vue'
+import HomePage from './components/pages/HomePage.vue'
 import CatalogPage from './components/pages/CatalogPage.vue'
 import ProductPage from './components/pages/ProductPage.vue'
 
 // Определение маршрутов
 const routes = [
-  { path: '/', component: Home },
+  { path: '/', component: HomePage },
   { path: '/catalog', component: CatalogPage },
   { path: '/product/:productId', component: ProductPage, name: 'product'}
 ]
