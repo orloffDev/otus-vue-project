@@ -1,21 +1,24 @@
 <script setup>
-  import { ref } from 'vue';
+  import { ErrorCodes, ref } from 'vue';
   import { useRoute } from 'vue-router';
   import axios from 'axios';
+  import { inject } from 'vue';
+
+  const cartStore = inject('cartStore')
 
   const route = useRoute()
   const productId = parseInt(route.params.productId)
-  let item = ref({})
+  let item = ref(null)
 
-  const loading = ref(true)
-const error = ref(null)
+  let loading = ref(true);
+  let errr = ref(null);
 const getProduct = async () => {
     try {
     loading.value = true
-    const response = await axios.get(`https://fakestoreapi.com/products/${productId}`)
+    const response = await axios.get(`https://www.kinoafisha.info/frontend/otus-products/${productId}/`)
       item = response.data
   } catch (err) {
-    error.value = err.message || 'Не удалось загрузить товар'
+    errr.value = err.message || 'Не удалось загрузить товар'
   } finally {
     loading.value = false
   }
@@ -29,8 +32,11 @@ getProduct()
 <template>
   <div>
     <div v-if="loading">Загрузка...</div>
-    <div v-else-if="error">{{ error }}</div>
+    <div v-else-if="errr">{{ errr }}</div>
     <div v-else>
+      <div v-if="item">
+          <button @click="cartStore.addToCart(item)">Добавить товар</button>
+          <button @click="cartStore.removeFromCart(item.id)">Удалить товар</button>
         <h1>{{ item.title }}</h1>
         <img :src="item.image" alt="" />
         <p>{{ item.description }}</p>
@@ -42,6 +48,7 @@ getProduct()
           <dt>Рейтинг</dt>
           <dd>{{ item.rating.rate }}/{{ item.rating.count }}</dd>
         </dl>
+      </div>
     </div>
   </div>
 </template>

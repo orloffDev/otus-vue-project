@@ -1,7 +1,11 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import axios from 'axios'
 import './style.css'
 import App from './App.vue'
+
+//Натсройки аякса
+axios.defaults.headers.common['X-Request-Ajax'] = 1;
 
 // Импорт компонентов
 import Home from './components/pages/Home.vue'

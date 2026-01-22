@@ -15,12 +15,12 @@ let filteredProductsData = ref([])
 //search
 
 
-const loading = ref(true)
-const error = ref(null)
+let loading = ref(true)
+let error = ref(null)
 const getProducts = async () => {
     try {
     loading.value = true
-    const response = await axios.get('https://www.kinoafisha.info/examples/products.json')
+    const response = await axios.post('https://www.kinoafisha.info/frontend/otus-products/')
     allProductsData.value = response.data
     filteredProductsData.value = response.data
   } catch (err) {
