@@ -6,7 +6,6 @@
   
 import Products from '../prod/Products.vue';
 import FilterBlock from '../prod/FilterBlock.vue';
-import NewProductBlock from '../prod/NewProductBlock.vue';
 import OrderForm from '../prod/OrderForm.vue';
 
 let allProductsData = ref([])
@@ -84,7 +83,6 @@ getProducts();
           <Products :items="filteredProductsData" />
         </main>
         <aside>
-          <NewProductBlock />
           <OrderForm />
         </aside>
       </section>
