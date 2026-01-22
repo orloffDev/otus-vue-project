@@ -9,11 +9,28 @@
       <router-link to="/">Главная</router-link> |
       <router-link to="/catalog">Каталог</router-link> 
     </nav>
-    <p>Товаров в корзине: <span>{{ cartStore.count }}</span></p>
+    <div class="cat">
+        <p>Товаров в корзине: <span>{{ cartStore.count }}</span></p>
+    <button @click="cartStore.clearCart()">Очистить корзину</button>
+    </div>
   </header>
 </template>
 
 <style scoped>
+  header {
+    background-color: #000;
+    margin-bottom:20px;
+    padding: 20px 20px;
+  }
+
+  @media (min-width: 760px){
+    header{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
 
 </style>
 
