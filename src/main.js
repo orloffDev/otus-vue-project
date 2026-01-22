@@ -11,12 +11,14 @@ axios.defaults.headers.common['X-Request-Ajax'] = 1;
 import HomePage from './components/pages/HomePage.vue'
 import CatalogPage from './components/pages/CatalogPage.vue'
 import ProductPage from './components/pages/ProductPage.vue'
+import AddProduct from './components/pages/AddProduct.vue'
 
 // Определение маршрутов
 const routes = [
   { path: '/', component: HomePage },
   { path: '/catalog', component: CatalogPage },
-  { path: '/product/:productId', component: ProductPage, name: 'product'}
+  { path: '/product/:productId', component: ProductPage, name: 'product'},
+  { path: '/add-product', component: AddProduct}
 ]
 
 // Создание роутера
