@@ -1,5 +1,6 @@
 <script setup>
   const props = defineProps([
+    'id',
     'title',
     'description',
     'price',
@@ -13,7 +14,9 @@
 <template>
   <article>
     <img :src="props.image" alt="" />
-    <h3>{{ props.title }}</h3>
+    <router-link :to="{ name: 'product', params: { productId: props.id }}">
+      <h3>{{ props.title }}</h3>
+    </router-link>
     <p>{{ props.description }}</p>
     <dl>
       <dt>Цена</dt>

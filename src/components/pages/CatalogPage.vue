@@ -2,11 +2,11 @@
 <script setup>
   import { ref, reactive, watch } from 'vue';
   import axios from 'axios';
+
   
-import Products from './components/prod/Products.vue';
-import FilterBlock from './components/prod/FilterBlock.vue';
-import NewProductBlock from './components/prod/NewProductBlock.vue';
-import OrderForm from './components/prod/OrderForm.vue';
+import Products from '../prod/Products.vue';
+import FilterBlock from '../prod/FilterBlock.vue';
+import OrderForm from '../prod/OrderForm.vue';
 
 let allProductsData = ref([])
 let filteredProductsData = ref([])
@@ -14,12 +14,12 @@ let filteredProductsData = ref([])
 //search
 
 
-const loading = ref(true)
-const error = ref(null)
+let loading = ref(true)
+let error = ref(null)
 const getProducts = async () => {
     try {
     loading.value = true
-    const response = await axios.get('https://www.kinoafisha.info/examples/products.json')
+    const response = await axios.post('https://www.kinoafisha.info/frontend/otus-products/')
     allProductsData.value = response.data
     filteredProductsData.value = response.data
   } catch (err) {
@@ -83,7 +83,6 @@ getProducts();
           <Products :items="filteredProductsData" />
         </main>
         <aside>
-          <NewProductBlock />
           <OrderForm />
         </aside>
       </section>

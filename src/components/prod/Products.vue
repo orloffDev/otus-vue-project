@@ -8,6 +8,7 @@ const props = defineProps(['items']);
   <div class="products">
     <Product
         v-for="item in items"
+        :id="item.id"
         :title="item.title"
         :description="item.description"
         :image="item.image"
