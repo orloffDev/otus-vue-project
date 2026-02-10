@@ -13,6 +13,7 @@ import CatalogPage from './components/pages/CatalogPage.vue'
 import ProductPage from './components/pages/ProductPage.vue'
 import AddProduct from './components/pages/AddProduct.vue'
 import AuthPage from './components/pages/AuthPage.vue'
+import NotFoundPage from './components/pages/NotFoundPage.vue'
 
 // Определение маршрутов
 const routes = [
@@ -20,7 +21,12 @@ const routes = [
   { path: '/catalog', component: CatalogPage },
   { path: '/product/:productId', component: ProductPage, name: 'product'},
   { path: '/add-product', component: AddProduct,  meta:{ isRequiresAuth: true}},
-  { path: '/auth', component: AuthPage, name: 'auth'}
+  { path: '/auth', component: AuthPage, name: 'auth'},
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFoundPage // создайте этот компонент
+  }
 ]
 
 // Создание роутера

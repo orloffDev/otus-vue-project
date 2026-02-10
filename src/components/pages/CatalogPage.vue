@@ -37,7 +37,7 @@ const formData = reactive({
   maxPrice: ''
 })
 
-const filterProducts = function(products, filters) {
+const filterProducts = (products, filters)=>{
       return products.filter(product => {
           // Фильтр по названию (регистронезависимый поиск)
           if (filters.title && filters.title.length>2 && !product.title.toLowerCase().includes(filters.title.toLowerCase())) {
