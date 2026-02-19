@@ -3,6 +3,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import axios from 'axios'
 import './style.css'
 import App from './App.vue'
+import {useUserStore} from "./stores/UserStorage";
+
+import {createPinia} from "pinia";
+import {storeToRefs} from "pinia";
 
 //Натсройки аякса
 axios.defaults.headers.common['X-Request-Ajax'] = 1;
@@ -30,8 +34,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = localStorage.getItem('token')
-  if (to.meta.isRequiresAuth && !isAuthenticated) {
+  //Авторизованный пользователь
+  const userStore = useUserStore();
+  const {token} = storeToRefs(userStore);
+
+  if (to.meta.isRequiresAuth && !token.value) {
     next({
       name: 'auth',
       query: { redirect: to.fullPath } // Сохраняем куда хотел пользователь
@@ -42,7 +49,9 @@ router.beforeEach((to, from, next) => {
 })
 
 
-// Подключение роутера к приложению
+// Подключение роутера и хранилища(pinia) к приложению
 const app = createApp(App)
+const pinia = createPinia()
 app.use(router)
+app.use(pinia)
 app.mount('#app')
