@@ -11,7 +11,7 @@
       <router-link to="/add-product">Добавить товар</router-link> 
     </nav>
     <div class="cat">
-        <p>Товаров в корзине: <span>{{ cartStore.count }}</span></p>
+        <p>Товаров в корзине: <span class="count-text">{{ cartStore.count }}</span></p>
     <button @click="cartStore.clearCart()">Очистить корзину</button>
     </div>
   </header>
