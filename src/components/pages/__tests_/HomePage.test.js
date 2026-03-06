@@ -18,7 +18,6 @@ describe('App', () => {
 
     // 2. Act
     const realText = wrapper.find('H1').text();
-    console.log('realText', realText);
 
     // 3. Assert
     expect(realText).toBe(expectedText)
