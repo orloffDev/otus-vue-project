@@ -1,6 +1,5 @@
 <script setup lang="ts">
-  import { ref, provide } from 'vue';
-  import Navigation from './components/prod/Navigation.vue';
+  import { provide } from 'vue';
   import { useCart } from './composables/useCart';
   const cartStore = useCart()
   provide('cartStore', cartStore)

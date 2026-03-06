@@ -57,10 +57,22 @@ Pinia — это хранилище состояний для Vue.js, офици
 
    
 ## Синтаксис
+### Pinia в тестах
 ```js
    beforeEach(() => {
     setActivePinia(createPinia())
    })
+```
+
+### Используем vue роутер в тестах
+```js
+import router from '@/router/index'
+import { test } from 'vitest'
+test('using router', async () => {
+   router.push({ name: 'home' })
+   await router.isReady()
+   const wrapper = mount(App, { global: { plugins: [router] } })
+])
 ```
 
 
