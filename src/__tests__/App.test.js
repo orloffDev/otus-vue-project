@@ -1,15 +1,10 @@
-import {describe, it, expect, beforeEach} from 'vitest'
+import {describe, it, expect} from 'vitest'
 import { mount } from '@vue/test-utils'
 import App from '../App.vue'
 import HomePage from '../components/pages/HomePage.vue'
-import {createPinia, setActivePinia} from "pinia";
 import { createRouter, createWebHistory } from 'vue-router'
 
 describe('App', () => {
-  beforeEach(() => {
-    setActivePinia(createPinia())
-  })
-
   it('should display home page', async () => {
     // 1. Arrange
     const router = createRouter({

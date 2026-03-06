@@ -1,13 +1,9 @@
-import { describe, it, expect, beforeEach } from 'vitest'
-import {createPinia, setActivePinia, storeToRefs} from "pinia";
+import { describe, it, expect} from 'vitest'
+import {storeToRefs} from "pinia";
 import {useUserStore} from "../UserStorage";
 
 
 describe('user storage', () => {
-    beforeEach(() => {
-        setActivePinia(createPinia())
-    })
-
     it('returns token', () => {
         // 1. Arrange
         const userStorage = useUserStore();

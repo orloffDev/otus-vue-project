@@ -1,15 +1,10 @@
-import { describe, it, expect, beforeEach } from 'vitest'
-import {createPinia, setActivePinia} from "pinia";
+import { describe, it, expect} from 'vitest'
 import { mount } from '@vue/test-utils'
 import AuthPage from '../AuthPage.vue'
 
 
 
 describe('App', () => {
-  beforeEach(() => {
-    setActivePinia(createPinia())
-  })
-
   it('should display component', () => {
 
     // 1. Arrange
