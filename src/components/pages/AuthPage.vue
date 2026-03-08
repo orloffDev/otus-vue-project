@@ -12,12 +12,14 @@
 
   const state = reactive({
     password: '',
-    login: ''
+    login: '',
+    address: ''
   })
 
   const rules = {
     password: {required},
     login: { required, email },
+    address: { required }
   }
 
   const v$ = useVuelidate(rules, state)
@@ -25,8 +27,18 @@
   const submit = async () => {
     const isValid = await v$.value.$validate()
     if (isValid) {
+      // Сохраняем все значения из полей
+      const authData = {
+        login: state.login,
+        password: state.password,
+        address: state.address,
+        token: 'asdasdasdsadad'
+      }
+
+
+
         //Эмулируем авторизацию
-        userStorage.save('adwadwdwa');
+        userStorage.login(authData);
 
       // ПОЛУЧАЕМ redirect параметр из query
       const redirect = route.query.redirect
@@ -52,28 +64,60 @@
       @blur="v$.login.$touch"
       :class="{ 'error': v$.login.$error }"
     />
+    <label>Адрес</label>
+    <input
+        name="adress"
+        type="text"
+        v-model="state.address"
+        @blur="v$.address.$touch"
+        :class="{ 'error': v$.address.$error }"
+    />
+    <label>Пароль</label>
     <input 
       name="password"
-      type="text"
+      type="password"
       v-model="state.password" 
       @blur="v$.password.$touch"
       :class="{ 'error': v$.password.$error }"
     />
 
-
-
-    
     <button :disabled="v$.$invalid">Submit</button>
   </form>
 </template>
 
 <style scoped>
-  input {
-    width:100%;
-    margin-bottom:10px;
-  }
-</style>
+input {
+  width:100%;
+  margin-bottom:5px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
 
+input.error {
+  border-color: red;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #42b983;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+</style>
 
 
 
