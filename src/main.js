@@ -42,9 +42,9 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   //Авторизованный пользователь
   const userStore = useUserStore();
-  const {token} = storeToRefs(userStore);
+  const {authData} = storeToRefs(userStore);
 
-  if (to.meta.isRequiresAuth && !token.value) {
+  if (to.meta.isRequiresAuth && !authData.value) {
     next({
       name: 'auth',
       query: { redirect: to.fullPath } // Сохраняем куда хотел пользователь
