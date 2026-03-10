@@ -35,7 +35,7 @@
       <div v-if="authData">
         <button
             @click="handleLogout"
-            class="btn btn-logout"
+            class="qweqwe"
         >
           Выйти
         </button>
@@ -44,8 +44,8 @@
         <router-link to="/auth">Войти</router-link>
       </div>
       <div class="cat">
-        <p>Товаров в корзине: <span class="count-text">{{ cartStore.count }}</span></p>
-        <button @click="cartStore.clearCart()">Очистить корзину</button>
+        <p class="cat_title">Товаров в корзине: <span class="cat_number">{{ cartStore.count }}</span></p>
+        <button class="cat_clear" @click="cartStore.clearCart()">Очистить корзину</button>
       </div>
     </div>
   </header>

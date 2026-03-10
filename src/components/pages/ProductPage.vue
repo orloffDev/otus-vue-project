@@ -34,9 +34,9 @@ getProduct()
     <div v-if="loading">Загрузка...</div>
     <div v-else-if="errr">{{ errr }}</div>
     <div v-else>
-      <div v-if="item">
-          <button @click="cartStore.addToCart(item)">Добавить товар</button>
-          <button @click="cartStore.removeFromCart(item.id)">Удалить товар</button>
+      <div class="product" v-if="item">
+          <button class="product_add" @click="cartStore.addToCart(item)">Добавить товар</button>
+          <button class="product_remove" @click="cartStore.removeFromCart(item.id)">Удалить товар</button>
         <h1>{{ item.title }}</h1>
         <img :src="item.image" alt="" />
         <p>{{ item.description }}</p>

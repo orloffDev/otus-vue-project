@@ -43,6 +43,6 @@ describe('Navigation', () => {
 
     // Ждем обновления DOM и проверяем отображение
     await wrapper.vm.$nextTick()
-    expect(wrapper.find('span.count-text').text()).toBe('0')
+    expect(wrapper.find('span.cat_number').text()).toBe('0')
   })
 })
