@@ -81,7 +81,7 @@
       :class="{ 'error': v$.password.$error }"
     />
 
-    <button :disabled="v$.$invalid">Submit</button>
+    <button :disabled="v$.$invalid">Войти</button>
   </form>
 </template>
 

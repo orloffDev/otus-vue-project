@@ -33,6 +33,59 @@ Pinia позволāет легко организовýватþ взаимод�
 
 Pinia — это хранилище состояний для Vue.js, официальная замена Vuex.
 
+## Тесты
+
+### Установка
+- vitest
+- jsdom
+- @types/jsdom
+- @vue/test-utils
+
+
+### AAA подход
+1. Arrange - договариваемсā о входном знаùении и
+   ожидаемом резулþтате  
+2. Act - вýзýваем наú код от входнýх даннýх.
+   Желателþно толþко один вýзов функøии!  
+3. Assert - проверāем, ùто резулþтатý вýзова
+   соответствуĀт ожиданиāм
+   ![img_3.png](img_3.png)
+   
+
+### Тестирование компонентов
+Исполþзуем пакет @vue/test-utils и функøиĀ mount()
+
+   
+## Синтаксис
+### Pinia в тестах
+```js
+   beforeEach(() => {
+    setActivePinia(createPinia())
+   })
+```
+
+### Используем vue роутер в тестах
+```js
+import router from '@/router/index'
+import { test } from 'vitest'
+test('using router', async () => {
+   router.push({ name: 'home' })
+   await router.isReady()
+   const wrapper = mount(App, { global: { plugins: [router] } })
+])
+```
+
+### Браузерные тесты
+- рендер браузера (показать, скрыть элементы, положение элементов)
+- Брузерное API
+- Загрузка или сохранение файлов
+- Анимации
+- Браузерные события (одно порождает другое итд)
+
+``` @playwright/test ```
+
+
+
 
 
 
