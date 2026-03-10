@@ -13,13 +13,17 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@apollo/client": "^3.14.0",
     "@playwright/test": "^1.58.2",
     "@types/jsdom": "^28.0.0",
     "@vitest/coverage-v8": "^4.0.18",
+    "@vue/apollo-option": "^4.2.2",
     "@vue/test-utils": "^2.4.6",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
     "axios": "^1.13.2",
+    "graphql": "^16.13.1",
+    "graphql-tag": "^2.12.6",
     "jsdom": "^27.0.1",
     "pinia": "^3.0.4",
     "vitest": "^4.0.18",
