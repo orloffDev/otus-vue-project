@@ -1,21 +1,55 @@
 <!-- ParentComponent.vue -->
 <script setup>
-  import { ref, reactive, watch } from 'vue';
-  import axios from 'axios';
+  import { useQuery } from '@vue/apollo-composable'
+  import { gql } from '@apollo/client/core'
+  import {ref, computed, reactive, watch } from 'vue'
+  import { useRouter } from 'vue-router'
+  import Products from '../prod/Products.vue';
+  import FilterBlock from '../prod/FilterBlock.vue';
+  import OrderForm from '../prod/OrderForm.vue';
 
-  
-import Products from '../prod/Products.vue';
-import FilterBlock from '../prod/FilterBlock.vue';
-import OrderForm from '../prod/OrderForm.vue';
+  // GraphQL запрос для получения списка продуктов
+  const PRODUCTS_QUERY = gql`
+  query GetPosts {
+    posts {
+      data {
+        id
+        title
+        body
+      }
+    }
+  }
+`
+  // Выполняем запрос
+  const { result, loading, error, refetch } = useQuery(PRODUCTS_QUERY)
 
-let allProductsData = ref([])
-let filteredProductsData = ref([])
+
+
+
+
+  const allProductsData = computed(() =>{
+    if (result.value?.posts?.data) {
+      return result.value.posts.data.map(product => ({
+        price: Math.random()*1000,
+        decription: product.body,
+        category: 'Категория',
+        rating: {
+          "rate": Math.random()*10,
+          "count": Math.random()*100,
+        },
+        image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png",
+        ...product
+      }))
+    }
+    return []
+  })
+
+  let filteredProductsData = ref(allProductsData.value)
 
 //search
 
 
-let loading = ref(true)
-let error = ref(null)
+
 const getProducts = async () => {
     try {
     loading.value = true
@@ -68,7 +102,7 @@ watch(formData, (newVal) => {
 }, { deep: true })
 
 //
-getProducts();
+//getProducts();
 
 </script>
 
