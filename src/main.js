@@ -1,8 +1,10 @@
-import { createApp } from 'vue'
+import { createApp, provide, h} from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import axios from 'axios'
 import './style.css'
 import App from './App.vue'
+import { DefaultApolloClient } from '@vue/apollo-composable'
+import { ApolloClient, InMemoryCache } from '@apollo/client/core'
 import {useUserStore} from "./stores/UserStorage";
 
 import {createPinia} from "pinia";
@@ -18,6 +20,13 @@ import ProductPage from './components/pages/ProductPage.vue'
 import AddProduct from './components/pages/AddProduct.vue'
 import AuthPage from './components/pages/AuthPage.vue'
 import NotFoundPage from './components/pages/NotFoundPage.vue'
+
+// Создаем Apollo Client
+const cache = new InMemoryCache()
+const apolloClient = new ApolloClient({
+  cache: cache,
+  uri: 'https://graphqlzero.almansi.me/api', // Публичное тестовое API
+})
 
 // Определение маршрутов
 const routes = [
@@ -56,7 +65,13 @@ router.beforeEach((to, from, next) => {
 
 
 // Подключение роутера и хранилища(pinia) к приложению
-const app = createApp(App)
+const app = createApp({
+  setup() {
+    // 2. Предоставляем клиент всему приложению
+    provide(DefaultApolloClient, apolloClient)
+  },
+  render: () => h(App),
+})
 const pinia = createPinia()
 app.use(router)
 app.use(pinia)
