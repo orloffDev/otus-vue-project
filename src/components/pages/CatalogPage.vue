@@ -44,8 +44,6 @@
     return []
   })
 
-  let filteredProductsData = ref(allProductsData.value)
-
 //search
 
 
@@ -71,35 +69,24 @@ const formData = reactive({
   maxPrice: ''
 })
 
-const filterProducts = (products, filters)=>{
-      return products.filter(product => {
-          // Фильтр по названию (регистронезависимый поиск)
-          if (filters.title && filters.title.length>2 && !product.title.toLowerCase().includes(filters.title.toLowerCase())) {
-              return false;
-          }
-          
-          // Фильтр по минимальной цене
-          if (filters.minPrice && product.price < filters.minPrice) {
-              return false;
-          }
-          
-          // Фильтр по максимальной цене
-          if (filters.maxPrice && product.price > filters.maxPrice) {
-              return false;
-          }
-          
-          return true;
-      });
-  }
+  const filteredProductsData = computed(() => {
+    const products = allProductsData.value;
+    const filters = formData;
 
-
-// Отслеживание изменений
-watch(formData, (newVal) => {
-  console.log('Данные изменились:', newVal);
-
-  filteredProductsData.value = filterProducts(allProductsData.value, newVal);
-
-}, { deep: true })
+    return products.filter(product => {
+      if (filters.title && filters.title.length > 2 &&
+          !product.title.toLowerCase().includes(filters.title.toLowerCase())) {
+        return false;
+      }
+      if (filters.minPrice && product.price < filters.minPrice) {
+        return false;
+      }
+      if (filters.maxPrice && product.price > filters.maxPrice) {
+        return false;
+      }
+      return true;
+    });
+  })
 
 //
 //getProducts();
