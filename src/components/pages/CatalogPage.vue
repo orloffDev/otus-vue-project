@@ -7,6 +7,7 @@
   import Products from '../prod/Products.vue';
   import FilterBlock from '../prod/FilterBlock.vue';
   import OrderForm from '../prod/OrderForm.vue';
+  import { useWebSocket } from '@vueuse/core'
 
   // GraphQL запрос для получения списка продуктов
   const PRODUCTS_QUERY = gql`
@@ -87,6 +88,26 @@ const formData = reactive({
       return true;
     });
   })
+
+  const { status,
+    data,
+    send,  // ← вот эту переменную нужно обязательно получить!
+    open,
+    close  } = useWebSocket('wss://echo.websocket.org', {
+    onMessage: (ws, event) => {
+      console.log('Echo response:', event.data)
+    }
+  })
+
+  // Отправка тестового сообщения
+  const sendTest = () => {
+    send(JSON.stringify({
+      type: 'test',
+      message: 'Hello Server!'
+    }))
+  }
+
+  sendTest();
 
 //
 //getProducts();
