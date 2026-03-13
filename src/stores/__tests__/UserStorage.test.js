@@ -7,13 +7,13 @@ describe('user storage', () => {
     it('returns token', () => {
         // 1. Arrange
         const userStorage = useUserStore();
-        const testToken = 'testToken';
-        userStorage.save(testToken);
+        const testData = {"login":"Oliver.conner@gmail.com","password":"asdsadfrgdfsfs33","address":"wdwdw","token":"asdasdasdsadad"};
+        userStorage.login(testData);
 
         // 2. Act
-        const {token} = storeToRefs(userStorage);
+        const {authData} = storeToRefs(userStorage);
 
         // 3. Assert
-        expect(token.value).toBe(testToken)
+        expect(authData.value).toEqual(testData)
     })
 })
