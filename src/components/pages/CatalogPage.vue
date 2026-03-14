@@ -1,5 +1,5 @@
 <!-- ParentComponent.vue -->
-<script setup>
+<script setup lang="ts">
   import { useQuery } from '@vue/apollo-composable'
   import { gql } from '@apollo/client/core'
   import {ref, computed, reactive, watch } from 'vue'
@@ -8,6 +8,21 @@
   import FilterBlock from '../prod/FilterBlock.vue';
   import OrderForm from '../prod/OrderForm.vue';
   import { useWebSocket } from '@vueuse/core'
+
+  // Типизация для данных продукта
+  interface Product {
+    id: string | number
+    title: string
+    price: number
+    decription?: string
+    category?: string
+    rating?: {
+      rate: number
+      count: number
+    }
+    image?: string
+    body?: string
+  }
 
   // GraphQL запрос для получения списка продуктов
   const PRODUCTS_QUERY = gql`
@@ -28,7 +43,7 @@
 
 
 
-  const allProductsData = computed(() =>{
+  const allProductsData = computed<Product[]>(() =>{
     if (result.value?.posts?.data) {
       return result.value.posts.data.map(product => ({
         price: Math.random()*1000,
@@ -70,7 +85,7 @@ const formData = reactive({
   maxPrice: ''
 })
 
-  const filteredProductsData = computed(() => {
+  const filteredProductsData = computed<Product[]>(() => {
     const products = allProductsData.value;
     const filters = formData;
 
