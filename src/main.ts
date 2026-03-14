@@ -20,6 +20,7 @@ import ProductPage from './components/pages/ProductPage.vue'
 import AddProduct from './components/pages/AddProduct.vue'
 import AuthPage from './components/pages/AuthPage.vue'
 import NotFoundPage from './components/pages/NotFoundPage.vue'
+import { RouteRecordRaw } from 'vue-router'
 
 // Создаем Apollo Client
 const cache = new InMemoryCache()
@@ -29,7 +30,7 @@ const apolloClient = new ApolloClient({
 })
 
 // Определение маршрутов
-const routes = [
+const routes: RouteRecordRaw[] = [
   { path: '/', component: HomePage },
   { path: '/catalog', component: CatalogPage },
   { path: '/product/:productId', component: ProductPage, name: 'product'},
