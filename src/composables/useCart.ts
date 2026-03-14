@@ -1,26 +1,45 @@
 import { reactive, computed, watch } from 'vue'
 
+// Типы данных
+interface Product {
+  id: number | string
+  title?: string
+  name?: string
+  price: number
+  [key: string]: any // для дополнительных полей
+}
+
+interface CartItem {
+  product: Product
+  quantity: number
+}
+
+interface CartState {
+  items: CartItem[]
+  initialized: boolean
+}
+
 export function useCart() {
-  // Инициализируем состояние корзины
-  const state = reactive({
+  // Инициализируем состояние корзины с типами
+  const state = reactive<CartState>({
     items: [],
     initialized: false
   })
 
-  const count = computed(() => {
+  const count = computed<number>(() => {
     let count = 0;
-    state.items.forEach((item)=>{
-        count = count + item.quantity || 0
+    state.items.forEach((item: CartItem) => {
+      count = count + (item.quantity || 0)
     });
     return count;
   })
 
   // Загружаем корзину из localStorage
-  const loadCart = () => {
+  const loadCart = (): void => {
     try {
       const saved = localStorage.getItem('cart')
       if (saved) {
-        const parsed = JSON.parse(saved)
+        const parsed = JSON.parse(saved) as CartItem[]
         state.items = parsed
       }
     } catch (error) {
@@ -31,7 +50,7 @@ export function useCart() {
   }
 
   // Сохраняем корзину в localStorage
-  const saveCart = () => {
+  const saveCart = (): void => {
     try {
       localStorage.setItem('cart', JSON.stringify(state.items))
     } catch (error) {
@@ -40,11 +59,11 @@ export function useCart() {
   }
 
   // Добавить товар в корзину
-  const addToCart = (product, quantity = 1) => {
+  const addToCart = (product: Product, quantity: number = 1): void => {
     if (!state.initialized) loadCart()
-    
-    const existingItem = state.items.find(item => item.product.id === product.id)
-    
+
+    const existingItem = state.items.find((item: CartItem) => item.product.id === product.id)
+
     if (existingItem) {
       existingItem.quantity += quantity
     } else {
@@ -53,23 +72,25 @@ export function useCart() {
         quantity
       })
     }
-    
+
     saveCart()
   }
 
   // Удалить товар из корзины
-  const removeFromCart = (productId) => {
-    const index = state.items.findIndex(item => item.product.id === productId)
+  const removeFromCart = (productId: number | string): void => {
+    const index = state.items.findIndex((item: CartItem) => item.product.id === productId)
     if (index !== -1) {
-      state.items[index].quantity --;
-      if(state.items[index].quantity === 0) state.items.splice(index, 1)
+      state.items[index].quantity--
+      if(state.items[index].quantity === 0) {
+        state.items.splice(index, 1)
+      }
       saveCart()
     }
   }
 
   // Изменить количество товара
-  const updateQuantity = (productId, quantity) => {
-    const item = state.items.find(item => item.product.id === productId)
+  const updateQuantity = (productId: number | string, quantity: number): void => {
+    const item = state.items.find((item: CartItem) => item.product.id === productId)
     if (item) {
       if (quantity > 0) {
         item.quantity = quantity
@@ -81,23 +102,23 @@ export function useCart() {
   }
 
   // Очистить корзину
-  const clearCart = () => {
+  const clearCart = (): void => {
     state.items = []
     saveCart()
   }
 
   // Вычисляемые свойства
-  const totalItems = computed(() => {
-    return state.items.reduce((total, item) => total + item.quantity, 0)
+  const totalItems = computed<number>(() => {
+    return state.items.reduce((total: number, item: CartItem) => total + item.quantity, 0)
   })
 
-  const totalPrice = computed(() => {
-    return state.items.reduce((total, item) => {
+  const totalPrice = computed<number>(() => {
+    return state.items.reduce((total: number, item: CartItem) => {
       return total + (item.product.price * item.quantity)
     }, 0)
   })
 
-  const isEmpty = computed(() => state.items.length === 0)
+  const isEmpty = computed<boolean>(() => state.items.length === 0)
 
   loadCart();
 

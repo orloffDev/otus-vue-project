@@ -1,34 +1,70 @@
-<script setup>
-  import { ErrorCodes, ref } from 'vue';
-  import { useRoute } from 'vue-router';
-  import axios from 'axios';
+<script setup lang="ts">
+  import { ErrorCodes, ref, Ref } from 'vue';
+  import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
+  import axios, { AxiosResponse, AxiosError } from 'axios';
   import { inject } from 'vue';
   import { useWebSocket } from '@vueuse/core'
 
-  const cartStore = inject('cartStore')
+  // Типизация для товара
+  interface Product {
+    id: number
+    title: string
+    price: number
+    description: string
+    category: string
+    image: string
+    rating: {
+      rate: number
+      count: number
+    }
+  }
 
-  const route = useRoute()
+  // Типизация для корзины
+  interface CartStore {
+    addToCart: (product: Product) => void
+    removeFromCart: (productId: number) => void
+    [key: string]: any
+  }
+
+  // Типизация для данных просмотра товара
+  interface ProductViewData {
+    type: 'PRODUCT_VIEW'
+    productId: number
+    productTitle: string
+    productCategory: string
+    timestamp: string
+    page: string
+  }
+
+  // Типизация для ошибки
+  interface ErrorWithMessage {
+    message: string
+  }
+
+  const cartStore = inject<CartStore>('cartStore')
+
+  const route: RouteLocationNormalizedLoaded = useRoute()
   const productId = parseInt(route.params.productId)
-  let item = ref(null)
+  let item: Ref<Product | null> = ref(null)
 
-  let loading = ref(true);
-  let errr = ref(null);
+  let loading: Ref<boolean> = ref(true);
+  let errr: Ref<string | null> = ref(null);
 
   // WebSocket для отслеживания просмотра
   const { status, send } = useWebSocket('wss://echo.websocket.org', {
     autoConnect: true,
-    onMessage: (ws, event) => {
+    onMessage: (ws: WebSocket, event: MessageEvent) => {
       console.log('Сервер подтвердил просмотр товара:', event.data)
     },
-    onConnected: () => {
+    onConnected: (ws: WebSocket) => {
       console.log('WebSocket подключен для отслеживания просмотров')
     }
   })
 
-const getProduct = async () => {
+const getProduct = async (): Promise<void> => {
     try {
     loading.value = true
-    const response = await axios.get(`https://www.kinoafisha.info/frontend/otus-products/${productId}/`)
+    const response: AxiosResponse<Product> = await axios.get(`https://www.kinoafisha.info/frontend/otus-products/${productId}/`)
       item.value = response.data
       // Отправляем просмотр после загрузки данных о товаре
       if (item.value) {
@@ -42,9 +78,9 @@ const getProduct = async () => {
 }
 
   // Функция отправки просмотра
-  const sendProductView = () => {
+  const sendProductView = (): void => {
     if (item.value) {
-      const viewData = {
+      const viewData: ProductViewData = {
         type: 'PRODUCT_VIEW',
         productId: item.value.id,
         productTitle: item.value.title,
