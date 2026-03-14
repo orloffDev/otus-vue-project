@@ -1,16 +1,31 @@
-<script setup>
+<script setup lang="ts">
   import { reactive } from 'vue'
   import { useVuelidate } from '@vuelidate/core'
   import { required, email, minLength } from '@vuelidate/validators'
   import { useRoute, useRouter } from 'vue-router'
   import {useUserStore} from "../../stores/UserStorage";
 
+  // Типизация для данных формы
+  interface FormState {
+    login: string
+    password: string
+    address: string
+  }
+
+  // Типизация для данных авторизации
+  interface AuthData {
+    login: string
+    password: string
+    address: string
+    token: string
+  }
+
   const route = useRoute() // ← Получаем текущий маршрут
   const router = useRouter()
 
   const userStorage = useUserStore();
 
-  const state = reactive({
+  const state: FormState = reactive({
     password: '',
     login: '',
     address: ''
@@ -28,7 +43,7 @@
     const isValid = await v$.value.$validate()
     if (isValid) {
       // Сохраняем все значения из полей
-      const authData = {
+      const authData: AuthData = {
         login: state.login,
         password: state.password,
         address: state.address,
