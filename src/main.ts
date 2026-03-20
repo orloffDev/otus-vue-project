@@ -15,6 +15,7 @@ import CatalogPage from './components/pages/CatalogPage.vue'
 import ProductPage from './components/pages/ProductPage.vue'
 import AddProduct from './components/pages/AddProduct.vue'
 import AuthPage from './components/pages/AuthPage.vue'
+import CartPage from './components/pages/CartPage.vue'
 import NotFoundPage from './components/pages/NotFoundPage.vue'
 
 // Типизация для мета-полей маршрутов
@@ -60,6 +61,10 @@ const routes: RouteRecordRaw[] = [
     path: '/auth',
     component: AuthPage,
     name: 'auth'
+  },
+  {
+    path: '/cart',
+    component: CartPage
   },
   {
     path: '/:pathMatch(.*)*',
