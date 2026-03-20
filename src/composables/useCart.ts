@@ -112,6 +112,10 @@ export function useCart() {
     return state.items.reduce((total: number, item: CartItem) => total + item.quantity, 0)
   })
 
+  const items = computed(() => {
+    return state.items
+  })
+
   const totalPrice = computed<number>(() => {
     return state.items.reduce((total: number, item: CartItem) => {
       return total + (item.product.price * item.quantity)
@@ -133,6 +137,7 @@ export function useCart() {
     clearCart,
     loadCart,
     totalItems,
+    items,
     totalPrice,
     isEmpty,
     count
