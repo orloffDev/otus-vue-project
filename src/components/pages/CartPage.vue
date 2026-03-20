@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import Product from '../prod/Product.vue'
   import {inject} from "vue";
+
 
   // Типизация для товара
   interface Product {
@@ -21,25 +23,45 @@
     removeFromCart: (productId: number) => void
     [key: string]: any
   }
-  const cartStore = inject<CartStore>('cartStore')
+  const {isEmpty, items} = inject<CartStore>('cartStore')
+
+  console.log(items.value);
+
 </script>
 
 <template>
   <h1>Корзина</h1>
-  <div>
-    <div v-if="loading">Загрузка...</div>
-    <div v-else-if="error">{{ error }}</div>
-    <div v-else>
-      <section>
-        <h2>Товары из корзины</h2>
-        <Products :items="popularProductsData" />
-      </section>
+  <div v-if="isEmpty">Нет ничего в корзине</div>
+  <div v-else class="items">
+    <div class="item" v-for="item in items">
+      <Product
+          :id="item.product.id"
+          :title="item.product.title"
+          :description="item.product.description"
+          :image="item.product.image"
+          :price="item.product.price"
+          :category="item.product.category"
+          :rating-rate="item.product.rating.rate"
+          :rating-count="item.product.rating.count"
+          class="list_left"
+      />
+      <div class="product_right">
+        Количество {{item.quantity}}
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-
+  .items {
+    display:grid;
+    grid-template-columns: 3fr 1fr;
+    column-gap: 30px;
+    row-gap: 10px;
+  }
+  .item {
+    display: contents;
+  }
 </style>
 
 
