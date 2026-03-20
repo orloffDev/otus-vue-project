@@ -44,7 +44,7 @@
         <router-link to="/auth">Войти</router-link>
       </div>
       <div class="cat">
-        <p class="cat_title">Товаров в корзине: <span class="cat_number">{{ cartStore.count }}</span></p>
+        <router-link class="cat_title" to="/cart">Товаров в корзине: <span class="cat_number">{{ cartStore.count }}</span></router-link>
         <button class="cat_clear" @click="cartStore.clearCart()">Очистить корзину</button>
       </div>
     </div>
