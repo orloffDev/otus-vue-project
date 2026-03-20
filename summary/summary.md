@@ -84,6 +84,17 @@ test('using router', async () => {
 
 ``` @playwright/test ```
 
+##Десктоп приложение на примере Electron
+npm create @quick-start/electron@latest
+
+##Nuxt
+![img_4.png](img_4.png)
+
+```https://nuxt.com/docs/4.x/directory-structure/app/middleware```
+
+
+
+
 
 
 
