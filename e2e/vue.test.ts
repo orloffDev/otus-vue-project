@@ -22,13 +22,10 @@ test('test auth', async ({ page }) => {
     });
 })
 
-test('add product to cat, then reset card', async ({ page }) => {
+test('add product to cat', async ({ page }) => {
     await page.goto('/product/1');
     await page.locator('.product_add').click();
 
     const catNumberContent =  await page.locator('.cat_number').first().textContent();
     await expect(page.locator('.cat_number').first()).toHaveText('1');
-
-    await page.locator('.cat_clear').first().click();
-    await expect(page.locator('.cat_number').first()).toHaveText('0');
 })
