@@ -9,6 +9,13 @@ import { useUserStore } from "./stores/UserStorage";
 import { createPinia, Pinia } from "pinia";
 import { storeToRefs } from "pinia";
 
+
+// Правильный импорт для Vue 3
+import BootstrapVue3 from 'bootstrap-vue-3'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
+
+
 // Импорт компонентов
 import HomePage from './components/pages/HomePage.vue'
 import CatalogPage from './components/pages/CatalogPage.vue'
@@ -120,6 +127,7 @@ const pinia: Pinia = createPinia()
 // Подключение плагинов с типами
 app.use(router)
 app.use(pinia)
+app.use(BootstrapVue3)
 
 // Монтирование приложения
 app.mount('#app')

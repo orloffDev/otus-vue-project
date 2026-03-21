@@ -21,52 +21,38 @@
 </script>
 
 <template>
-  <header class="header">
 
 
-    <div class="header_left">
-      <nav>
-        <router-link to="/">Главная</router-link> |
-        <router-link to="/catalog">Каталог</router-link> |
-        <router-link to="/add-product">Добавить товар</router-link>
-      </nav>
-    </div>
-    <div class="header_right">
-      <div v-if="authData">
-        <button
-            @click="handleLogout"
-            class="qweqwe"
-        >
-          Выйти
-        </button>
-      </div>
-      <div v-else>
-        <router-link to="/auth">Войти</router-link>
-      </div>
-      <div class="cat">
-        <router-link class="cat_title" to="/cart">Товаров в корзине: <span class="cat_number">{{ cartStore.count }}</span></router-link>
-        <button class="cat_clear" @click="cartStore.clearCart()">Очистить корзину</button>
-      </div>
-    </div>
-  </header>
+  <b-navbar toggleable="lg" type="dark" variant="info">
+    <b-navbar-brand href="#">OTUS</b-navbar-brand>
+
+    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+    <b-collapse id="nav-collapse" is-nav>
+
+      <b-navbar-nav>
+        <b-nav-item to="/">Главная</b-nav-item>
+        <b-nav-item to="/catalog">Каталог</b-nav-item>
+        <b-nav-item to="/add-product">Добавить товар</b-nav-item>
+      </b-navbar-nav>
+
+      <!-- Right aligned nav items -->
+      <b-navbar-nav class="ms-auto">
+        <b-nav-item-dropdown right>
+          <!-- Using 'button-content' slot -->
+          <template #button-content>
+            <em>Пользователь</em>
+          </template>
+            <b-dropdown-item v-if="authData" @click="handleLogout">Выйти</b-dropdown-item>
+            <b-dropdown-item  v-else to="/auth">Войти</b-dropdown-item>
+        </b-nav-item-dropdown>
+        <b-nav-item to="/cart">Корзина {{ cartStore.count }}</b-nav-item>
+      </b-navbar-nav>
+    </b-collapse>
+  </b-navbar>
 </template>
 
 <style scoped>
-  header {
-    background-color: #000;
-    margin-bottom:20px;
-    padding: 20px 20px;
-  }
-
-  @media (min-width: 760px){
-    header{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      column-gap: 20px;
-    }
-  }
-
 
 </style>
 

@@ -23,13 +23,16 @@ import Product from '../prod/Product.vue'
     removeFromCart: (productId: number) => void
     [key: string]: any
   }
-  const {isEmpty, items} = inject<CartStore>('cartStore')
+
+  const cartStore = inject<CartStore>('cartStore')
+  const {isEmpty, items} = cartStore
 
   console.log(items.value);
 
 </script>
 
 <template>
+  <button class="cat_clear" @click="cartStore.clearCart()">Очистить корзину</button>
   <h1>Корзина</h1>
   <div v-if="isEmpty">Нет ничего в корзине</div>
   <div v-else class="items">
