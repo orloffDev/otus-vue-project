@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  import { ErrorCodes, ref, Ref } from 'vue';
+import {computed, ErrorCodes, ref, Ref} from 'vue';
   import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
-  import axios, { AxiosResponse, AxiosError } from 'axios';
   import { inject } from 'vue';
-  import { useWebSocket } from '@vueuse/core'
+  import {gql} from "@apollo/client/core";
+  import {useQuery} from "@vue/apollo-composable";
 
   // Типизация для товара
   interface Product {
@@ -41,30 +41,69 @@
     message: string
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
   const cartStore = inject<CartStore>('cartStore')
 
   const route: RouteLocationNormalizedLoaded = useRoute()
   const productId = parseInt(route.params.productId)
-  let item: Ref<Product | null> = ref(null)
 
-  let loading: Ref<boolean> = ref(true);
+
+
+
   let errr: Ref<string | null> = ref(null);
 
-  // WebSocket для отслеживания просмотра
-  const { status, send } = useWebSocket('wss://echo.websocket.org', {
-    autoConnect: true,
-    onMessage: (ws: WebSocket, event: MessageEvent) => {
-      console.log('Сервер подтвердил просмотр товара:', event.data)
-    },
-    onConnected: (ws: WebSocket) => {
-      console.log('WebSocket подключен для отслеживания просмотров')
+
+  // GraphQL запрос для получения списка продуктов
+  const PRODUCT_QUERY = gql`
+  query GetPost {
+    post(id: ${productId}) {
+      id
+      title
+      body
     }
-  })
+  }
+`
+  // Выполняем запрос
+  const { result, loading, error, refetch } = useQuery(PRODUCT_QUERY)
+
+  const item = computed<Product[]>(() =>{
+    if (result.value?.post) {
+      const product = result.value.post;
+      return {
+        price: Math.random()*1000,
+        decription: product.body,
+        category: 'Категория',
+        rating: {
+          "rate": Math.random()*10,
+          "count": Math.random()*100,
+        },
+        image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png",
+        ...product
+      }
+    }
+  return null
+})
+
+
 
 const getProduct = async (): Promise<void> => {
     try {
-    loading.value = true
-    const response: AxiosResponse<Product> = await axios.get(`https://www.kinoafisha.info/frontend/otus-products/${productId}/`)
+    loading.value = true;
+    const response = await axios.post(`https://www.kinoafisha.info/frontend/otus-products/${productId}/`)
+
+      console.log(response.data);
+
       item.value = response.data
       // Отправляем просмотр после загрузки данных о товаре
       if (item.value) {
@@ -100,7 +139,7 @@ const getProduct = async (): Promise<void> => {
 
 
 //
-getProduct()
+//getProduct()
 
 
 </script>
