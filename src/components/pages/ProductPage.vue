@@ -159,6 +159,7 @@ const getProduct = async (): Promise<void> => {
           <button class="product_add" @click="cartStore.addToCart(item)">Добавить товар</button>
           <button class="product_remove" @click="cartStore.removeFromCart(item.id)">Удалить товар</button>
         <h1>{{ item.title }}</h1>
+        <h2>ID продукта: {{ item.id }}</h2>
         <img :src="item.image" alt="" />
         <p>{{ item.description }}</p>
         <dl>
