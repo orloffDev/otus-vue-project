@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import Product from '../prod/Product.vue'
   import {inject} from "vue";
+import {storeToRefs} from "pinia";
+import {useUserStore} from "../../stores/UserStorage";
 
 
   // Типизация для товара
@@ -27,12 +29,17 @@ import Product from '../prod/Product.vue'
   const cartStore = inject<CartStore>('cartStore')
   const {isEmpty, items} = cartStore
 
-  console.log(items.value);
+  //Авторизованный пользователь
+  const userStorage = useUserStore(); //userStore
+  const {authData} = storeToRefs(userStorage);
 
 </script>
 
 <template>
   <button class="cat_clear" @click="cartStore.clearCart()">Очистить корзину</button>
+  <button v-if="authData" class="cat_clear" @click="cartStore.order(authData.address)">Заказать</button>
+  <router-link v-else class="cat_clear" to="/auth">Заказать</router-link>
+
   <h1>Корзина</h1>
   <div v-if="isEmpty">Нет ничего в корзине</div>
   <div v-else class="items">

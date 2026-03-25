@@ -46,7 +46,7 @@
             <b-dropdown-item v-if="authData" @click="handleLogout">Выйти</b-dropdown-item>
             <b-dropdown-item  v-else to="/auth">Войти</b-dropdown-item>
         </b-nav-item-dropdown>
-        <b-nav-item to="/cart">Корзина {{ cartStore.count }}</b-nav-item>
+        <b-nav-item to="/cart">Корзина <span class="cat_number">{{ cartStore.count }}</span></b-nav-item>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>

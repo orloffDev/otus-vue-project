@@ -107,6 +107,14 @@ export function useCart() {
     saveCart()
   }
 
+  //Заказать
+  const order = (addr): void => {
+    console.log('Собраные данные');
+    console.log(addr);
+    console.log(items.value);
+    alert('Данные заказа отправлены');
+  }
+
   // Вычисляемые свойства
   const totalItems = computed<number>(() => {
     return state.items.reduce((total: number, item: CartItem) => total + item.quantity, 0)
@@ -135,6 +143,7 @@ export function useCart() {
     removeFromCart,
     updateQuantity,
     clearCart,
+    order,
     loadCart,
     totalItems,
     items,

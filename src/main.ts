@@ -71,7 +71,8 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/cart',
-    component: CartPage
+    component: CartPage,
+    name: 'cart'
   },
   {
     path: '/:pathMatch(.*)*',
